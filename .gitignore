@@ -1,0 +1,52 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# === Virtual environments ===
+.venv/
+venv/
+env/
+
+# === Jupyter ===
+.ipynb_checkpoints/
+
+# === Secrets ===
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*_credentials
+*_credentials.json
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === mypy / ruff cache ===
+.mypy_cache/
+.ruff_cache/
+
+# === pytest ===
+.pytest_cache/
+htmlcov/
+.coverage
+
+# === Training output (regenerable from code + seed) ===
+runs/
+checkpoints/
+videos/
+*.pt
+*.pth
