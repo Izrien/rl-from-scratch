@@ -1,0 +1,23 @@
+# Every text file stores LF in the index, whatever a contributor's
+# core.autocrlf (Windows default true, Linux/macOS false/input).
+#
+# `text=auto`: Git decides text vs binary, then enforces LF.
+# `text`     : always text. Used where CRLF breaks execution (shell scripts,
+#              YAML/TOML parsers).
+
+# Catch-all; the rules below override it for their patterns (last match wins).
+*                   text=auto eol=lf
+
+.gitattributes      text eol=lf
+
+*.py                text=auto eol=lf
+*.md                text=auto eol=lf
+*.txt               text=auto eol=lf
+
+*.sh                text eol=lf
+*.yml               text eol=lf
+*.yaml              text eol=lf
+*.toml              text eol=lf
+*.cfg               text eol=lf
+*.ini               text eol=lf
+*.json              text eol=lf

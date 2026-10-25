@@ -1,0 +1,45 @@
+# Pre-commit hooks — run on `git commit`, on STAGED files only.
+# One-time setup per clone, in the project venv:
+#   pre-commit install
+#   pre-commit run --all-files
+#
+# Each rev was tagged at least 14 days before it was chosen; ruff-pre-commit
+# matches the ruff pin in pyproject.toml.
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+        args: ['--maxkb=2048']      # safety net against accidental checkpoint/video commits
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.0
+    hooks:
+      - id: ruff                    # lint (reads [tool.ruff] from pyproject.toml)
+        args: [--fix]
+      - id: ruff-format             # format
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks                # secret scan on staged content
+
+  # `mypy src` once per commit that stages a Python file under src/.
+  # The launcher finds this checkout's venv whether or not it is active, and
+  # never a mypy that happens to be first on PATH (see its header). CI's Python
+  # 3.11 run stays authoritative.
+  - repo: local
+    hooks:
+      - id: mypy-src
+        name: mypy src
+        entry: sh scripts/hooks/mypy_src.sh
+        language: system
+        types: [python]
+        files: ^src/
+        pass_filenames: false
